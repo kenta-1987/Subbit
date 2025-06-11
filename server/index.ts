@@ -1,3 +1,5 @@
+Ctrl + V（コントロールキーを押しながら V）
+Ctrl + V（コントロールキーを押しながら V）
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -100,3 +102,6 @@ app.use((req, res, next) => {
     log(`serving on port ${port}`);
   });
 })();
+nano server/index.tsapp.listen(8080, () => {
+  console.log("Server is running on port 8080");
+});

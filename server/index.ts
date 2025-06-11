@@ -24,18 +24,14 @@ registerRoutes(app);
 
 // 環境に応じたフロントエンドの提供
 if (process.env.NODE_ENV === "development") {
-  setupVite(app); // 開発用 Vite ミドルウェア
+  setupVite(app);
 } else {
-  serveStatic(app); // 本番用静的ファイル配信
+  serveStatic(app);
 }
 
-// サーバー起動
-const PORT = process.env.PORT || 8080;
+// ✅ サーバー起動（PORT環境変数がなければ5000で起動）
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   log(`🚀 Server is running at http://localhost:${PORT}`);
-});
-
-app.listen(8080, () => {
-  console.log("Server is running on port 8080");
 });
 

@@ -1,11 +1,18 @@
+import dotenv from "dotenv";
+dotenv.config();
+console.log("STRIPE_SECRET_KEY:", process.env.STRIPE_SECRET_KEY);
 import express, { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
+import { createServer } from "http";
+
+console.log("✅ index.ts: サーバー起動処理開始"); // ← ここに入れる！
 
 const app = express();
+const server = createServer(app);
 
-// CORSミドルウェア（全リクエスト許可）
+// CORSミドルウェア
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -19,19 +26,18 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// ルーティング登録
+// APIルーティング登録
 registerRoutes(app);
 
-// 環境に応じたフロントエンドの提供
+// フロントエンド提供
 if (process.env.NODE_ENV === "development") {
-  setupVite(app);
+  setupVite(app, server);
 } else {
   serveStatic(app);
 }
 
-// ✅ サーバー起動（PORT環境変数がなければ5000で起動）
+// サーバー起動
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   log(`🚀 Server is running at http://localhost:${PORT}`);
 });
-

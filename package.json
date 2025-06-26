@@ -1,4 +1,7 @@
 {
+  "name": "subbit-platform",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
     "build": "NODE_ENV=production vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --outdir=dist/server --minify --tree-shaking=true",
